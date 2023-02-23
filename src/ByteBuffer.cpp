@@ -574,6 +574,8 @@ bool cByteBuffer::ReadUUID(cUUID & a_Value)
 {
 	CHECK_THREAD
 
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 	std::array<Byte, 16> UUIDBuf;
 	if (!ReadBuf(UUIDBuf.data(), UUIDBuf.size()))
 	{
@@ -582,6 +584,7 @@ bool cByteBuffer::ReadUUID(cUUID & a_Value)
 
 	a_Value.FromRaw(UUIDBuf);
 	return true;
+	#pragma GCC diagnostic pop
 }
 
 

@@ -106,7 +106,8 @@ Compression::Result Compression::Compressor::Compress(const void * const Input, 
 
 
 
-
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 Compression::Result Compression::Compressor::CompressGZip(const ContiguousByteBufferView Input)
 {
 	return Compress<&libdeflate_gzip_compress>(Input.data(), Input.size());
@@ -129,7 +130,6 @@ Compression::Result Compression::Compressor::CompressZLib(const void * const Inp
 {
 	return Compress<&libdeflate_zlib_compress>(Input, Size);
 }
-
 
 
 
@@ -179,7 +179,7 @@ Compression::Result Compression::Extractor::ExtractZLib(ContiguousByteBufferView
 {
 	return Extract<&libdeflate_zlib_decompress>(Input, UncompressedSize);
 }
-
+#pragma GCC diagnostic pop
 
 
 
